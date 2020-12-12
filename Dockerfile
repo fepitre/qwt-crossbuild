@@ -1,6 +1,6 @@
-FROM registry.fedoraproject.org/fedora-minimal:latest
+FROM fedora:32
 
-RUN microdnf install -y \
+RUN dnf install -y \
     mingw32-gcc mingw64-gcc mingw32-gcc-c++ mingw64-gcc-c++ \
     mingw32-winpthreads-static mingw64-winpthreads-static \
     mono-core cabextract wine.i686 tar unzip make curl vim-enhanced \
@@ -8,8 +8,8 @@ RUN microdnf install -y \
 
 # FIXME 
 # dotnet unattended installation doesn't work on the latest wine
-RUN microdnf install dnf libxcrypt-compat.i686
-RUN dnf downgrade --releasever=28 -y wine.i686
+RUN dnf install -y libxcrypt-compat.i686
+RUN dnf downgrade --releasever=30 -y --allowerasing wine.i686
 
 RUN curl -s -LJ https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > /usr/local/bin/winetricks && chmod +x /usr/local/bin/winetricks
 
