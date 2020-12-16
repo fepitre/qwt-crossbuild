@@ -1,0 +1,30 @@
+From 0ddc56a540083b4ca4ffa9f05167c12a5351cc14 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Pierret=20=28fepitre=29?=
+ <frederic.pierret@qubes-os.org>
+Date: Wed, 16 Dec 2020 17:44:41 +0100
+Subject: [PATCH] qvmini: fix incompatible pointer-types
+
+qvideo/miniport/qvmini.c: In function 'DriverEntry':
+qvideo/miniport/qvmini.c:372:42: warning: assignment to 'PVIDEO_HW_GET_CHILD_DESCRIPTOR' {aka 'long int (*)(void *, struct _VIDEO_CHILD_ENUM_INFO *, enum _VIDEO_CHILD_TYPE *, unsigned char *, long unsigned int *, long unsigned int *)'} from incompatible pointer type 'VP_STATUS (*)(void *, VIDEO_CHILD_ENUM_INFO *, VIDEO_CHILD_TYPE *, void *, ULONG *, ULONG *)' {aka 'long int (*)(void *, struct _VIDEO_CHILD_ENUM_INFO *, enum _VIDEO_CHILD_TYPE *, void *, long unsigned int *, long unsigned int *)'} [-Wincompatible-pointer-types]
+  372 |     hwInitData.HwGetVideoChildDescriptor = &HwVidGetChildDescriptor;
+      |                                          ^
+---
+ qvideo/miniport/qvmini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/qvideo/miniport/qvmini.c b/qvideo/miniport/qvmini.c
+index f9e655b..ef40b3d 100644
+--- a/qvideo/miniport/qvmini.c
++++ b/qvideo/miniport/qvmini.c
+@@ -81,7 +81,7 @@ VP_STATUS HwVidGetChildDescriptor(
+     IN void *hwDeviceExtension,
+     IN VIDEO_CHILD_ENUM_INFO *childEnumInfo,
+     OUT VIDEO_CHILD_TYPE *childType,
+-    OUT void *childDescriptor,
++    OUT unsigned char *childDescriptor,
+     OUT ULONG *id,
+     OUT ULONG *unused
+     )
+-- 
+2.26.2
+
