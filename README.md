@@ -1,10 +1,9 @@
-# qwt-crossbuild
+# qwt-crossbuild (FOR TESTING/DEV. PURPOSES ONLY)
 Qubes Windows Tools crossbuild environment based on mingw, wine and docker
-
-[![Build Status](https://travis-ci.org/tabit-pro/qwt-crossbuild.svg?branch=master)](https://travis-ci.org/tabit-pro/qwt-crossbuild)
 
 In comparison with the original ITL's Qubes Tools qwt-crossbuild contains several in-progress improvements:
 
+- [ ] source files signature verification (including winetricks tool and downloads)
 - [x] rebuild QWT utils (mingw, x86, x86\_64)
 - [x] include updated xen pv drivers (8.2.2)
 - [x] avoid high cpu consumption (move qga CreateEvent outside an event processing loop)
@@ -15,6 +14,16 @@ In comparison with the original ITL's Qubes Tools qwt-crossbuild contains severa
 - [ ] troubleshoot bsod errors (0x101, 0xc5, 0x50)
 - [x] prepare reproducible/deterministic build (binaries only)
 - [x] support Qubes-r4.1 (qrexec v2 backward compatibility)
+
+## Build QWT
+
+```shell_session
+$ git clone https://github.com/QubesOS/qubes-builder
+$ cd qubes-builder
+$ ln -s example-configs/qubes-os-master.conf builder.conf
+$ make install-deps get-sources COMPONENTS='$(BUILDER_PLUGINS) qwt-crossbuild' GIT_URL_qwt_crossbuild=https://github.com/fepitre/qwt-crossbuild INSECURE_SKIP_CHECKING="qwt-crossbuild"
+$ make qubes-dom0 COMPONENTS="qwt-crossbuild"
+```
 
 ## QWT Runtime prerequisuites
 
@@ -35,13 +44,3 @@ In comparison with the original ITL's Qubes Tools qwt-crossbuild contains severa
 | Block device | + | + |
 | USB device | - | - |
 | Audio | - | - |
-
-## Build QWT
-
-```shell_session
-$ git clone https://github.com/tabit-pro/qwt-crossbuild .
-$ docker build -t tabit/qwt .
-$ mkdir -p ~/qwtiso
-$ docker run -v $(pwd):/src -v ~/qwtiso:/build/noarch -it tabit/qwt sh -c "cp -fr /src/* ./ || true && make sources && rpmbuild -bb --define '_sourcedir /build' --define '_rpmdir /build' *.spec && cd noarch && createrepo ./"
-```
-
