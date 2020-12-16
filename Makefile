@@ -9,8 +9,7 @@ WINDMC=/usr/bin/x86_64-w64-mingw32-windmc
 DDKPATH=/usr/x86_64-w64-mingw32/sys-root/mingw/include/ddk
 DEBUG=-U_DEBUG -UDBG -UDEBUG
 
-TARGETS=devcon.exe qubes-core-agent-windows \
-	qubes-gui-agent-windows qubes-installer-qubes-os-windows-tools
+TARGETS=devcon.exe qubes-core-agent-windows qubes-installer-qubes-os-windows-tools
 OUTDIR=$(PWD)/bin/$(ARCH)
 
 get-sources:
