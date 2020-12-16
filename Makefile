@@ -13,9 +13,7 @@ TARGETS=devcon.exe qubes-core-agent-windows \
 	qubes-gui-agent-windows qubes-installer-qubes-os-windows-tools
 OUTDIR=$(PWD)/bin/$(ARCH)
 
-sources:
-	mkdir -p devcon
-	svn --force export https://github.com/microsoft/Windows-driver-samples/trunk/setup/devcon && tar -czvf devcon.tar.gz devcon
+get-sources:
 	spectool -g *.spec
 
 prep: 
