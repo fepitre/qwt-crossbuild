@@ -15,6 +15,9 @@ OUTDIR=$(PWD)/bin/$(ARCH)
 get-sources:
 	spectool -g *.spec
 
+verify-sources:
+	@true
+
 prep: 
 	mkdir -p $(OUTDIR)
 
